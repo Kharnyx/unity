@@ -1,0 +1,425 @@
+:root {
+    --theme-gradient: linear-gradient(135deg, hsl(284, 100%, 78%) 0%, hsl(217, 100%, 65%) 50%, hwb(185 36% 0%) 100%);
+    --header-bg-color: hsl(224, 37%, 20%);
+    --content-bg-color: hsl(224, 37%, 25%);
+    --tab-selected-color: hsl(207, 100%, 92%);
+    --tab-color: hsl(207, 100%, 82%);
+    --model-bg-color: hsl(224, 37%, 20%);
+    --model-border-color: hsl(224, 37%, 12%);
+    --content-text-color: hsl(217, 100%, 93%);
+    --model-box-shadow-color: hsl(224, 37%,55%);
+    --shadow-color: rgba(0, 0, 0, 0.25); /*For box shadow inset*/
+    --input-bg-color: hsl(224, 71%, 71%);
+    --input-bg-focus-color: hsl(224, 60%, 78%);
+    --header-height: 3.5rem;
+    font-size: 16px;
+}
+
+@media (max-width: 600px) {
+    :root {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 1500px) {
+    :root {
+        font-size: 18px;
+    }
+}
+
+input, textarea {
+    margin: 0;
+    width: 100%;
+    font-size: 1rem;
+    padding: 0.625em 0.9375em;
+    border: none;
+    background-color: var(--input-bg-color);
+    color: #ffffff;
+    border-radius: 1em;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+textarea {
+    overflow: hidden;
+}
+
+input:focus, textarea:focus {
+    outline: none;
+    color: #000000;
+    background-color: var(--input-bg-focus-color);
+}
+
+hr {
+    width: 100%;
+    border: 1px solid #ffffff;
+    margin: 0.5em 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    font-size: 1rem;
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    color: var(--content-text-color);
+}
+
+* {
+    scrollbar-color: hsl(207, 100%, 82%) transparent;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+h4 {
+    font-weight: normal;
+}
+
+button {
+    position: relative;
+    cursor: pointer;
+    padding: 0.75em 1.5em;
+    margin: 1em;
+    border-radius: 0.75em;
+    font-size: calc(1rem * 1.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: var(--theme-gradient);
+    color: #ffffff;
+    font-weight: bold;
+    filter: brightness(1);
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    transform: scale(1.05);
+    filter: brightness(1.1);
+    background: var(--theme-gradient);
+}
+
+button::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    z-index: 1;
+    box-shadow: 0 -0.3em 0 0px var(--shadow-color) inset;
+}
+
+.contact-me {
+    color: var(--content-text-color);
+    font-size: 2rem;
+}
+
+#contact-form {
+    width: 50%;
+    padding: 1em;
+    margin: 1em;
+    border-radius: 1em;
+    background-color: var(--model-bg-color);
+    box-shadow: 0 0 1em 0.05em var(--model-box-shadow-color);
+}
+
+#contact-form input, #contact-form textarea {
+    margin: 0.5em 0;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.header {
+    position: relative;
+    width: 100%;
+    height: var(--header-height);
+    background-color: var(--header-bg-color);
+    backdrop-filter: blur(5px);
+    z-index: 9999;
+    border-bottom: 1px solid hsla(0, 0%, 100%, 0.5);
+    transition: all 0.3 ease;
+}
+
+.header:hover {
+    box-shadow: 0 3px 10px 2px rgba(0, 0, 0, 0.25);
+}
+
+.header img {
+    width: 100%;
+}
+
+.tabs {
+    position: absolute;
+    right: 0;
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    padding: 1em;
+}
+
+.options {
+    position: absolute;
+    height: 3.5rem;
+    left: 0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1em;
+}
+
+/*
+.contacts {
+    position: absolute;
+    background-color: hsl(226, 46%, 25%);
+    color: var(--tab-selected-color);
+    width: 100%;
+    height: 4.25em;
+    transform: translateY(calc(4.25em - 1.5em));
+    padding-top: 2em;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    font-size: 1em;
+    align-items: center;
+    border-radius: 0 0 5em 5em;
+}
+
+.contacts .container {
+    font-size: 1.25em;
+}
+*/
+
+.rectangle {
+    position: relative;
+    width: 450px;
+    height: 450px;
+    background: var(--theme-gradient);
+    margin: 1em;
+}
+
+.circle {
+    position: relative;
+    width: 360px;
+    height: 360px;
+    border-radius: 25%;
+    background: var(--theme-gradient);
+    margin: 1em;
+}
+
+.circle::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    z-index: 1;
+    box-shadow: 0 -30px 0 0px var(--shadow-color) inset;
+}
+
+.logo {
+    height: 1.3em;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 0.3em;
+    z-index: 1;
+    font-size: 1.75em;
+    background-image: var(--theme-gradient) 1;
+}
+
+/*
+.logo::before {
+    content: "";
+    position: absolute;
+    width: 115%;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    background-image: var(--theme-gradient);
+}
+*/
+
+.logo img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    z-index: 1;
+}
+
+.tabs .tab {
+    color: var(--tab-color);
+    cursor: pointer;
+    user-select: none;
+    border-bottom: 0.2em transparent;
+    padding: 0 0.25em;
+    margin: 0 1em;
+    letter-spacing: 1px;
+    border-bottom: 0 solid;
+    border-image: var(--theme-gradient) 1;
+    font-weight: normal;
+    transition: all 0.3s ease, border-width 0.1s ease;
+}
+
+.tabs .tab.active {
+    color: var(--tab-selected-color);
+    border-bottom: 0.2em solid;
+    border-image: var(--theme-gradient) 1;
+    text-shadow: 1px 0px 0px var(--tab-selected-color);
+}
+
+.tab:hover {
+    color: var(--tab-selected-color);
+}
+
+.content {
+    display: flex;
+    justify-content: center;
+    font-size: 1.5em;
+    height: calc(100% - var(--header-height));
+    width: 100%;
+    background-color: var(--content-bg-color);
+    overflow-y: scroll;
+    overflow-x: auto;
+    color: var(--content-text-color);
+}
+
+.tab-content {
+    display: none;
+    padding: 1em;
+    width: 100%;
+    text-align: center;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.tab-content .container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+#home-content .container {
+    text-align: center;
+}
+
+#home-content .container h3 {
+    font-size: 1.5rem;
+}
+
+.model {
+    position: relative;
+    width: min(14em, 100%);
+    aspect-ratio: 1 / 1;
+    margin: 1.25em;
+    background-color: var(--model-bg-color);
+    overflow: hidden;
+    border-radius: 1em;
+    color: var(--content-text-color);
+    box-shadow: 0 0 1em 0.05em var(--model-box-shadow-color);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.model::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    z-index: 1;
+    box-shadow: 0 -0.75em 0 0px var(--shadow-color) inset;
+}
+
+.model .h3-container {
+    overflow-y: auto;
+    margin-bottom: 0.75em;
+}
+
+.model .text-container {
+    height: 100%;
+}
+
+.model:hover {
+    transform: scale(1.05);
+}
+
+.model .image-container {
+    width: 100%;
+    height: auto;
+    top: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.model h2 {
+    font-size: 1.5rem;
+    margin: 0.25rem;
+    width: 100%;
+    font-weight: bold;
+}
+
+.model h3 {
+    font-size: 1rem;
+    margin: 0.5rem;
+    margin-top: 0.25rem;
+    font-weight: normal;
+}
+
+#product-info {
+    padding: 1em;
+}
+
+#product-info .container {
+    display: flex;
+    justify-content: start;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 1em;
+    box-shadow: 0 0 1em 0.05em var(--model-box-shadow-color);
+    background-color: var(--model-bg-color);
+}
+
+#product-info .text-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 0.2em 0.75em;
+}
+
+#product-info .text-container h3 {
+    font-weight: normal;
+    font-size: 1.2rem;
+}
+
+#sender-comment {
+    resize: none;
+}
