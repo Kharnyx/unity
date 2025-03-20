@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Kharnyx</title>
+    <link rel="stylesheet" href="public/style.css">
+    <link rel="icon" href="assets/images/logo/kharnyx-logo-square.png">
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <div class="name">
+                <img src="assets/images/logo/kharnyx-logo-circle.png" alt="Kharnyx Logo" class="logo-img">
+                <h1>Kharnyx</h1>
+            </div>
+            <p>Empowering Every Creator with High-Quality, Affordable Assets</p>
+        </div>
+    </header>
+
+    <div class="tab-container">
+        <nav class="tabs">
+            <ul>
+                <li class="tab" data-tab="tab1" data-hash="home">Home</li>
+                <li class="tab" data-tab="tab2" data-hash="models">Models</li>
+                <li class="tab" data-tab="tab4" data-hash="contact">Contact</li> <!-- New Contact tab -->
+            </ul>
+        </nav>
+    </div>
+
+    <section id="tab1" class="tab-content">
+        <div class="tab-header">
+            <h2>Home</h2>
+        </div>
+
+        <div class="frosted"></div>
+
+        <div class="home-content content">
+            <h3>
+                Kharnyx is a freelance developer offering a collection of high-quality 3D models for Unity.
+                Their goal is to provide affordable assets that don't skimp on quality, perfect for fellow freelance
+                developers and hobbyists looking to make their projects stand out. <br><br>
+                Kharnyx creates versatile 3D models that can fit into a wide range of game styles. Whether
+                developers are building a fantasy world or crafting a futuristic sci-fi universe, they will find
+                something useful in the Kharnyx store. There is no specific theme for these models—they are
+                designed to be flexible and easy to use in whatever game world developers are bringing to
+                life.<br><br>
+                Kharnyx keeps costs low because they believe in making great assets accessible to everyone.
+                They encourage developers to check back regularly for new additions, and to reach out if they need
+                anything. Kharnyx is always happy to help!
+            </h3>
+        </div>
+    </section>
+
+    <!--
+    <div class="asset-item">
+        <div class="asset-image">
+            <img src="" alt="TITLE">
+        </div>
+        <div class="asset-info">
+            <h3 class="title">TITLE</h3>
+            <p>DESCRIPTION</p>
+            <button class="open-asset-store" data-url="">View
+                on Asset Store</button>
+        </div>
+    </div>
+    -->
+
+    <section id="tab2" class="tab-content">
+        <div class="tab-header">
+            <h2>3D Models</h2>
+            <div class="search-assets">
+                <input id="asset-search-input" placeholder="Search For An Asset..." autocomplete="off">
+            </div>
+        </div>
+
+        <div class="asset-content content">
+            <div class="asset-item featured">
+                <div class="asset-image">
+                    <img src="assets/images/models/plates-bowls-cups.png" alt="Plates Bowls and Cups">
+                </div>
+                <div class="asset-info">
+                    <h3 class="title">Plates Bowls and Cups</h3>
+                    <p>A variety of tableware models featuring 8 plates, 8 bowls, and 5 cups—a total of 21 assets (23
+                        meshes).
+                        Perfect for enhancing kitchen and interior scenes in your projects.</p>
+                    <button class="open-asset-store" data-url="https://assetstore.unity.com/packages/slug/312159">View
+                        on Asset Store</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="tab4" class="tab-content">
+        <div class="tab-header">
+            <h2>Contact Me</h2>
+        </div>
+
+        <div class="contact-content content">
+            <h3>I'd love to hear from you!</h3>
+
+            <p>If you have any questions, feedback, or inquiries about my assets, feel free to contact me via email at
+                <u><strong id="email" alt="Kharnyx Email">kharnyx3@gmail.com</strong></u></p>
+
+            <!--
+            <p>If you have any questions, feedback, or inquiries about my assets, feel free to reach out to me by
+                filling out the below information and contacting me via email:</p>
+            <form>
+                <div class="form-group">
+                    <label alt="Your Name" for="contact-name">Your Name:</label>
+                    <input type="text" id="contact-name" name="name" placeholder="Name..." autocomplete="off" required>
+                </div>
+                <div class="form-group">
+                    <label alt="Your Message" for="contact-message">Your Message:</label>
+                    <textarea id="contact-message" name="message" rows="5" placeholder="Message..." autocomplete="off"
+                        required></textarea>
+                </div>
+                <button type="submit" id="submit-btn" class="submit-btn">Send Email</button>
+            </form>
+            -->
+        </div>
+    </section>
+
+    <div id="model-preview" class="model">
+        <div class="model-content">
+            <span class="close">&times;</span>
+            <h3>Asset Preview</h3>
+            <div id="preview-content">
+                <img>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Kharnyx. All Rights Reserved.</p>
+    </footer>
+
+    <script src="public/script.js" defer></script>
+</body>
+
+</html>
