@@ -95,14 +95,18 @@ function setup() {
         for (let tab of tabs) {
             tab.classList.remove("active");
         }
-
+        
+        let completed = false;
         if (parts[0]) {
             for (let tab of tabs) {
                 if (tab.getAttribute("data-hash") === parts[0]) {
                     tab.click();
+                    completed = true;
                     break;
                 }
             }
+
+            if (!completed) document.querySelector(".tab").click();
         }
     }
 
