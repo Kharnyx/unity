@@ -95,18 +95,21 @@ function setup() {
         for (let tab of tabs) {
             tab.classList.remove("active");
         }
-        
-        let completed = false;
-        if (parts[0]) {
-            for (let tab of tabs) {
-                if (tab.getAttribute("data-hash") === parts[0]) {
-                    tab.click();
-                    completed = true;
-                    break;
-                }
-            }
 
-            if (!completed) document.querySelector(".tab").click();
+        let completed = false;
+        for (let i = 0; i < parts.length; i++) {
+            if (parts[i]) {
+                for (let tab of tabs) {
+                    if (tab.getAttribute("data-hash") === parts[i]) {
+                        tab.click();
+                        completed = true;
+                        break;
+                    }
+                }
+
+                if (!completed) document.querySelector(".tab").click();
+                else break;
+            }
         }
     }
 
@@ -139,7 +142,7 @@ function setup() {
             tabContainer.style.position = "unset";
         }
     });
-    
+
     document.getElementById("email").addEventListener("click", () => {
         window.location.href = "mailto:kharnyx3@gmail.com";
     });
