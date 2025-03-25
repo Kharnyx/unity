@@ -170,7 +170,11 @@ function setup() {
 
         if (!searched) {
             for (let asset of assets) {
-                asset.style.display = "block";
+                if (asset.classList.contains("featured")) {
+                    asset.parentElement.style.display = "flex";
+                } else {
+                    asset.style.display = "block";
+                }
             }
 
             return;
@@ -180,14 +184,22 @@ function setup() {
             let searchName = asset.querySelector(".asset-info .title").textContent;
 
             let terms = searched.split(' ').filter(Boolean);
-            let assetTerms = searchName.split(' ').filter(Boolean)
+            let assetTerms = searchName.split(' ').filter(Boolean);
 
             for (let i = 0; i < terms.length; i++) {
                 if (searchName.toLocaleLowerCase().includes(terms[i].toLocaleLowerCase())) {
-                    asset.style.display = "block";
+                    if (asset.classList.contains("featured")) {
+                        asset.parentElement.style.display = "flex";
+                    } else {
+                        asset.style.display = "block";
+                    }
                     break;
                 } else {
-                    asset.style.display = "none";
+                    if (asset.classList.contains("featured")) {
+                        asset.parentElement.style.display = "none";
+                    } else {
+                        asset.style.display = "none";
+                    }
                 }
             }
 
