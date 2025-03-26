@@ -143,7 +143,7 @@ function setup() {
         }
     });
 
-    document.getElementById("email").addEventListener("click", () => {
+    document.querySelector("#email, .name").addEventListener("click", () => {
         window.location.href = "mailto:kharnyx3@gmail.com";
     });
 
