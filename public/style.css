@@ -165,6 +165,7 @@ header .logo .name {
     justify-content: center;
     text-align: center;
     margin-bottom: 0.5em;
+    cursor: pointer;
 }
 
 .logo-img {
@@ -348,7 +349,12 @@ nav ul li.active::before {
 .asset-item.featured {
     position: relative;
     height: 100%;
+    width: 100%;
     background-color: var(--asset-bg-color);
+}
+
+.asset-container.featured:hover {
+    background-color: var(--asset-bg-hover-color);
 }
 
 .asset-container.featured {
@@ -373,7 +379,7 @@ nav ul li.active::before {
 }
 
 .asset-item.featured h2 {
-    font-size: 2em;
+    font-size: 1.5em;
     margin: 0;
     margin-bottom: 0.5em;
     font-weight: 900;
@@ -501,6 +507,42 @@ nav ul li.active::before {
     }
 }
 
+@media screen and (min-width: 100em) {
+
+    /* 480px */
+    .asset-content {
+        grid-template-columns: repeat(4, 1fr);
+        /* Stack asset-content in one column */
+    }
+}
+
+@media screen and (min-width: 200em) {
+
+    /* 480px */
+    .asset-content {
+        grid-template-columns: repeat(5, 1fr);
+        /* Stack asset-content in one column */
+    }
+}
+
+@media screen and (min-width: 230em) {
+
+    /* 480px */
+    .asset-content {
+        grid-template-columns: repeat(6, 1fr);
+        /* Stack asset-content in one column */
+    }
+}
+
+@media screen and (min-width: 320em) {
+
+    /* 480px */
+    .asset-content {
+        grid-template-columns: repeat(9, 1fr);
+        /* Stack asset-content in one column */
+    }
+}
+
 @media screen and (max-width: 48em) {
 
     /* 768px */
@@ -513,7 +555,7 @@ nav ul li.active::before {
     }
 }
 
-@media screen and (max-width: 30em) {
+@media screen and (max-width: 35em) {
 
     /* 480px */
     .asset-content {
