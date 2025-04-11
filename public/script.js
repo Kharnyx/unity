@@ -6,6 +6,8 @@ if (document.readyState === "loading") {
 
 function setup() {
     const tabs = document.querySelectorAll(".tab");
+    const tabContainer = document.querySelector(".tabs");
+    const header = document.querySelector("header");
     const contents = document.querySelectorAll(".tab-content");
     const previewBtns = document.querySelectorAll(".preview-btn");
     const openAssetStoreBtns = document.querySelectorAll(".open-asset-store");
@@ -14,6 +16,7 @@ function setup() {
     const closeModel = document.querySelector(".close");
     const featuredAssets = document.querySelectorAll(".featured");
     const buttons = document.querySelectorAll("button");
+    const noResults = document.querySelector(".asset-content .no-results");
 
     for (let tab of tabs) {
         tab.addEventListener("click", () => {
@@ -127,8 +130,6 @@ function setup() {
     }
 
     window.addEventListener("scroll", () => {
-        const tabContainer = document.querySelector(".tabs");
-        const header = document.querySelector("header");
         const headerRect = header.getBoundingClientRect();
         const tabRect = tabContainer.getBoundingClientRect();
         const top = tabRect.top;
@@ -143,8 +144,16 @@ function setup() {
         }
     });
 
-    document.querySelector("#email, .name").addEventListener("click", () => {
+    document.querySelector("#email").addEventListener("click", () => {
         window.location.href = "mailto:kharnyx3@gmail.com";
+    });
+
+    document.querySelector("#asset-store-account").addEventListener("click", () => {
+        window.open("https://assetstore.unity.com/publishers/113303", "_blank");
+    });
+
+    document.querySelector(".name").addEventListener("click", () => {
+        document.querySelector(".tab").click();
     });
 
     const submitBtn = document.getElementById("submit-btn");
@@ -177,12 +186,15 @@ function setup() {
                 }
             }
 
+            noResults.style.display = "none";
+
             return;
         }
 
         for (let asset of assets) {
             let searchName = asset.querySelector(".asset-info .title").textContent;
 
+            let numberOfResults = 0;
             let terms = searched.split(' ').filter(Boolean);
             let assetTerms = searchName.split(' ').filter(Boolean);
 
@@ -193,6 +205,7 @@ function setup() {
                     } else {
                         asset.style.display = "block";
                     }
+                    numberOfResults++;
                     break;
                 } else {
                     if (asset.classList.contains("featured")) {
@@ -201,6 +214,10 @@ function setup() {
                         asset.style.display = "none";
                     }
                 }
+            }
+
+            if (numberOfResults == 0) {
+                noResults.style.display = "block";
             }
 
             /*
