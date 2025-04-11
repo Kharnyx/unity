@@ -37,7 +37,7 @@ strong {
     font-size: inherit;
 }
 
-#email {
+.link {
     cursor: pointer;
     position: relative;
     background: var(--theme-gradient);
@@ -50,12 +50,12 @@ strong {
     transition: filter 0.3s ease, -webkit-filter 0.3s ease;
 }
 
-#email:hover {
+.link:hover {
     filter: brightness(1.5);
     -webkit-filter: brightness(1.5);
 }
 
-#email::after {
+.link::after {
     content: "";
     position: absolute;
     bottom: 2px;
