@@ -129,21 +129,6 @@ function setup() {
         container.appendChild(asset);
     }
 
-    window.addEventListener("scroll", () => {
-        const headerRect = header.getBoundingClientRect();
-        const tabRect = tabContainer.getBoundingClientRect();
-        const top = tabRect.top;
-
-        if (top <= 0 && headerRect.bottom <= 0) {
-            tabContainer.style.position = "fixed";
-            document.querySelector(".tab-container").style.height = `${tabContainer.offsetHeight}px`;
-        }
-
-        if (headerRect.bottom > top) {
-            tabContainer.style.position = "unset";
-        }
-    });
-
     document.querySelector("#email").addEventListener("click", () => {
         window.location.href = "mailto:kharnyx3@gmail.com";
     });
