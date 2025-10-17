@@ -190,6 +190,12 @@ header .logo .name {
     object-fit: cover;
 }
 
+.tab-container {
+    position: sticky;
+    top: -1px;
+    z-index: 10;
+}
+
 .tabs {
     user-select: none;
     position: none;
