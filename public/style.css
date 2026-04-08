@@ -7,13 +7,13 @@
     --text: #eef4e8;
     --text-rgb: 238, 244, 232;
 
-    /* --- OPTION A: PURPLE / BLUE THEME --- */
+    /* --- PURPLE / BLUE THEME --- */
     --accent: #ba87ea;
     --accent-rgb: 186, 135, 234;
     --accent-2: #96caea;
     --accent-2-rgb: 150, 202, 234;
 
-    /* --- OPTION B: UNITY GREEN THEME (Uncomment to use) --- */
+    /* --- GREEN THEME --- */
     /* --accent: #9dc18a;
     --accent-rgb: 157, 193, 138;
     --accent-2: #6f9f62;
@@ -396,7 +396,6 @@ h1 {
 
 .preview-slider img {
     grid-area: 1/1;
-    /* Stack images on top of each other */
     opacity: 0;
     transition: opacity 0.3s ease;
 }
@@ -558,7 +557,6 @@ h1 {
             rgba(var(--accent-rgb), 0.95),
             rgba(var(--accent-2-rgb), 0.92));
     color: var(--bg);
-    /* Ensures text contrast matches background theme */
     border-color: transparent;
     font-weight: 700;
 }
