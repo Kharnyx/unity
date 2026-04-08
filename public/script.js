@@ -10,6 +10,8 @@
     let activeMagnet = null;
     let lastMagnetPos = null; // To remember where to explode from
 
+    const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--accent-rgb').trim() || "186, 135, 234";
+
     // Dynamic Scroll Handling
     const navLinks = document.querySelectorAll(".header-inner .nav a, .header-inner .brand");
 
@@ -257,9 +259,9 @@
             this.isNearMagnet = false; // Track for glow effect
         }
 
-        // New method to pull particles to the button
+        // Pull particles to the button
         spawnAround(targetX, targetY) {
-            const spawnRadius = 120; // Distance they spawn at before being "sucked in"
+            const spawnRadius = Math.random() * 10 + 120; // Distance they spawn at before being "sucked in"
             const angle = Math.random() * Math.PI * 2;
             this.x = targetX + Math.cos(angle) * spawnRadius;
             this.y = targetY + Math.sin(angle) * spawnRadius;
@@ -297,7 +299,7 @@
                     this.y -= (dy / mag) * distToEdge * attractionForce;
 
                     const direction = this.targetRadius > 20 ? -1 : 1;
-                    const orbitSpeed = (5.0 + (this.baseSpeed * 2)) * direction;
+                    const orbitSpeed = (3.0 + (this.baseSpeed * 2)) * direction;
                     const margin = 5;
 
                     // Orbit logic
@@ -413,7 +415,7 @@
                     height: rect.height
                 };
 
-                // Forcefully "suck" 20 particles to this button immediately
+                // Forcefully "suck" 20 particles to the button
                 let count = 0;
                 for (let p of particles) {
                     if (!p.isNearMagnet && count < 25) {
@@ -442,7 +444,6 @@
             const pulse = Math.sin(time + i) * 0.02;
             const grad = ctx.createLinearGradient(ray.x, 0, ray.x - 500, height);
 
-            // Using pure white (255, 255, 255)
             grad.addColorStop(0, `rgba(255, 255, 255, ${ray.op + pulse})`);
             grad.addColorStop(0.2, `rgba(255, 255, 255, ${(ray.op + pulse) * 0.25})`);
             grad.addColorStop(1, `rgba(255, 255, 255, 0)`);
@@ -462,13 +463,10 @@
         ctx.clearRect(0, 0, width, height);
         targetScrollSpeed *= 0.9;
 
-        // Grab the color once per frame instead of 120 times
-        const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--accent-rgb').trim() || "168, 85, 247";
-
         drawGodRays();
         particles.forEach(p => {
             p.update();
-            p.draw(accentColor); // Pass the color in
+            p.draw(accentColor);
         });
         requestAnimationFrame(animate);
     }
