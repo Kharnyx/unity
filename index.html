@@ -11,117 +11,173 @@
 </head>
 
 <body>
-    <header>
-        <div class="logo">
-            <div class="name">
-                <img src="assets/logo/images/kharnyx-text-neon.PNG" alt="Kharnyx Logo" class="logo-img">
-                <!-- <h1>Kharnyx</h1> -->
-            </div>
-            <p>Empowering Every Creator with High-Quality, Affordable Assets</p>
+    <canvas id="bg-particles"></canvas>
+
+    <header class="header">
+        <div class="container header-inner">
+            <a class="brand" href="#home" aria-label="Kharnyx home">
+                <div class="brand-mark">
+                    <img class="logo-img" src="assets/logo/images/KMNQ1121.PNG" alt="Kharnyx logo">
+                </div>
+                <span>
+                    <img class="logo-img" src="assets/logo/images/kharnyx-text-neon.PNG" alt="Kharnyx logo">
+                </span>
+            </a>
+            <nav class="nav" aria-label="Primary navigation">
+                <a href="#home">Home</a>
+                <a href="#models">Models</a>
+                <a href="#contact">Contact</a>
+            </nav>
         </div>
+        <div class="glassmorphism"></div>
     </header>
 
-    <div class="tab-container">
-        <nav class="tabs">
-            <ul>
-                <li class="tab" data-tab="tab1" data-hash="home">Home</li>
-                <li class="tab" data-tab="tab2" data-hash="models">Models</li>
-                <li class="tab" data-tab="tab4" data-hash="contact">Contact</li> <!-- New Contact tab -->
-            </ul>
-        </nav>
-    </div>
+    <main class="container">
+        <section class="hero" id="home">
+            <article class="card hero-main">
+                <p class="eyebrow">Home</p>
+                <h1>Empowering Every Creator with High-Quality, Affordable Assets</h1>
+                <p class="lead">
+                    Hi, I'm Kharnyx, a freelance developer offering a collection of high-quality 3D models for Unity.
+                    My goal is to provide affordable assets that don’t compromise on quality, perfect for fellow
+                    freelance
+                    developers and hobbyists looking to make their projects stand out.
+                    <br><br>
+                    I create versatile 3D models that can fit into a wide range of game styles. Whether you’re building
+                    a
+                    fantasy world or crafting a futuristic sci-fi universe, you’ll find something useful in my store.
+                    There’s no specific theme for these models—they’re designed to be flexible and easy to use in
+                    whatever
+                    game world you’re creating.
+                    <br><br>
+                    I keep costs low because I believe in making great assets accessible to everyone. I encourage
+                    developers
+                    to check back regularly for new additions and to reach out if they need anything. I’m always happy
+                    to help!
+                </p>
+            </article>
 
-    <section id="tab1" class="tab-content">
-        <div class="tab-header">
-            <h2>Home</h2>
-        </div>
+            <aside class="side">
+                <article class="card mini">
+                    <div class="section-title">
+                        <h2>Home</h2>
+                        <p>Quick overview of the store and its focus.</p>
+                    </div>
+                    <div class="stats">
+                        <div class="stat">
+                            <span class="stat-label">Focus</span>
+                            <div class="stat-value">Unity 3D assets</div>
+                            <div class="stat-desc">Flexible models for different game worlds and art styles.</div>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">Approach</span>
+                            <div class="stat-value">Affordable</div>
+                            <div class="stat-desc">Low-cost assets without cutting the quality that matters.</div>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">Support</span>
+                            <div class="stat-value">Friendly help</div>
+                            <div class="stat-desc">Reach out anytime for questions, feedback, or inquiries.</div>
+                        </div>
+                    </div>
+                </article>
+            </aside>
+        </section>
 
-        <div class="home-content content">
-            <h3>
-                Hi, I'm <strong class="link" id="asset-store-account">Kharnyx</strong>, a freelance developer offering a collection of high-quality 3D models for Unity. My goal is to
-                provide affordable assets that don’t compromise on quality, perfect for fellow freelance developers and
-                hobbyists looking to make their projects stand out.<br><br>
-
-                I create versatile 3D models that can fit into a wide range of game styles. Whether you’re building a
-                fantasy world or crafting a futuristic sci-fi universe, you’ll find something useful in my store.
-                There’s no specific theme for these models—they’re designed to be flexible and easy to use in whatever
-                game world you’re creating.<br><br>
-
-                I keep costs low because I believe in making great assets accessible to everyone. I encourage developers
-                to check back regularly for new additions and to reach out if they need anything. I’m always happy to
-                help!
-            </h3>
-        </div>
-    </section>
-
-    <section id="tab2" class="tab-content">
-        <div class="tab-header">
-            <h2>3D Models</h2>
-            <div class="search-assets">
-                <input id="asset-search-input" placeholder="Search for an asset..." autocomplete="off">
-            </div>
-        </div>
-
-        <div class="asset-content content">
-            <div class="no-results" style="display: none;">There are no results for this search</div>
-            <div class="asset-item">
-                <div class="asset-image">
-                    <img src="assets/models/plates-bowls-cups/plates-bowls-cups.png" alt="Plates Bowls and Cups">
+        <section class="card section" id="models">
+            <div class="section-head">
+                <div>
+                    <h2>3D Models</h2>
+                    <p class="note" id="results-count">Showing all assets</p>
                 </div>
-                <div class="asset-info">
-                    <h3 class="title">Plates Bowls and Cups</h3>
-                    <p>A variety of tableware models featuring 8 plates, 8 bowls, and 5 cups—a total of 21 assets (23
-                        meshes).
-                        Perfect for enhancing kitchen and interior scenes in your projects.</p>
-                    <button class="open-asset-store" data-url="https://assetstore.unity.com/packages/slug/312159">View
-                        on Asset Store</button>
-                </div>
-            </div>
-
-            <div class="asset-item featured">
-                <div class="asset-image">
-                    <img src="assets/models/piano-and-stool/images/branded-piano-landscape.png" alt="Piano and Stool">
-                </div>
-                <div class="asset-info">
-                    <h3 class="title">Piano and Stool</h3>
-                    <p>A wooden piano and leather stool—a total of 2 assets (216 meshes).
-                        Perfect for adding realism and elegance to your digital scenes.</p>
-                    <button class="open-asset-store" data-url="https://assetstore.unity.com/packages/slug/313446">View
-                        on Asset Store</button>
+                <div class="search-container">
+                    <input type="text" id="asset-search" placeholder="Search assets..." aria-label="Search assets">
                 </div>
             </div>
-        </div>
-    </section>
 
-    <section id="tab4" class="tab-content">
-        <div class="tab-header">
-            <h2>Contact Me</h2>
-        </div>
-
-        <div class="contact-content content">
-            <h3>I'd love to hear from you!</h3>
-
-            <p>If you have any questions, feedback, or inquiries about my assets, feel free to contact me via email at
-                <strong class="link" id="email" alt="Kharnyx Email">kharnyx3@gmail.com</strong>
-            </p>
-        </div>
-    </section>
-
-    <div id="model-preview" class="model">
-        <div class="model-content">
-            <span class="close">&times;</span>
-            <h3>Asset Preview</h3>
-            <div id="preview-content">
-                <img>
+            <div id="no-results" class="no-results" style="display: none;">
+                No models found matching your search.
             </div>
-        </div>
-    </div>
 
-    <footer>
-        <p>&copy; 2025 Kharnyx. All Rights Reserved.</p>
-    </footer>
+            <div class="models">
+                <article class="model-card">
+                    <div class="preview">
+                        <div class="preview-slider">
+                            <img class="active" alt="Preview 1"
+                                src="assets/models/plates-bowls-cups/images/plates-bowls-cups.png" />
+                            <img alt="Preview 2"
+                                src="assets/models/plates-bowls-cups/demo-files/Screenshot 2025-03-05 174052.png" />
+                            <img alt="Preview 3"
+                                src="assets/models/plates-bowls-cups/demo-files/Screenshot 2025-03-05 174104.png" />
+                            <img alt="Preview 4"
+                                src="assets/models/plates-bowls-cups/demo-files/Screenshot 2025-03-05 174113.png" />
+                            <img alt="Preview 5"
+                                src="assets/models/plates-bowls-cups/demo-files/Screenshot 2025-03-05 174156.png" />
 
-    <script src="public/script.js" defer></script>
-</body>
+                        </div>
+                    </div>
+                    <h3>Plates Bowls and Cups</h3>
+                    <p>
+                        A variety of tableware models featuring 8 plates, 8 bowls, and 5 cups—a total of 21 assets
+                        (23 meshes). Perfect for enhancing kitchen and interior scenes in your projects.
+                    </p>
+                    <div class="btn-row">
+                        <a class="btn primary open-asset-store" href="https://assetstore.unity.com/packages/slug/312159"
+                            target="_blank" rel="noopener">View on Asset Store</a>
+                    </div>
+                </article>
+
+                <article class="model-card">
+                    <div class="preview">
+                        <div class="preview-slider">
+                            <img class="active" alt="Preview 1"
+                                src="assets/models/piano-and-stool/images/branded-piano-landscape.png" />
+                            <img alt="Preview 2"
+                                src="assets/models/piano-and-stool/demo-files/Screenshot 2025-03-23 110754.png" />
+                        </div>
+                    </div>
+                    <h3>Piano and Stool</h3>
+                    <p>
+                        A wooden piano and leather stool—a total of 2 assets (216 meshes). Perfect for adding realism
+                        and elegance to your digital scenes.
+                    </p>
+                    <div class="btn-row">
+                        <a class="btn primary open-asset-store" href="https://assetstore.unity.com/packages/slug/313446"
+                            target="_blank" rel="noopener">View on Asset Store</a>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="card section" id="contact">
+            <div class="section-head">
+                <div>
+                    <h2>Contact Me</h2>
+                    <p class="note">I'd love to hear from you!</p>
+                </div>
+            </div>
+
+            <div class="contact">
+                <p class="note" style="margin-bottom: 1.5rem;">If you have any questions or feedback, feel free to reach
+                    out.
+                </p>
+
+                <a href="mailto:kharnyx3@gmail.com" class="email-pill">
+                    <span class="email-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect width="20" height="16" x="2" y="4" rx="2" />
+                            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                        </svg>
+                    </span>
+                    <span class="email-address">kharnyx3@gmail.com</span>
+                </a>
+            </div>
+        </section>
+
+        <p class="footer">© <span id="year">2026</span> Kharnyx. All Rights Reserved.</p>
+    </main>
+
+    <script src="public/script.js"></script>
 
 </html>
