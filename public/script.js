@@ -1,6 +1,7 @@
 (function () {
     document.getElementById('year').textContent = new Date().getFullYear();
 
+    const PI2 = Math.PI * 2;
 
     let canvas, ctx, width, height, particles = [];
     let scrollSpeed = 0;
@@ -8,7 +9,6 @@
     let lastScrollY = window.scrollY;
 
     let activeMagnet = null;
-    let lastMagnetPos = null; // To remember where to explode from
 
     const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--accent-rgb').trim() || "186, 135, 234";
 
@@ -235,6 +235,8 @@
         height = canvas.height = window.innerHeight;
     }
 
+    const GRAVITY = 0.05;
+
     class Particle {
         constructor() {
             this.reset();
@@ -251,21 +253,23 @@
             this.vy = 0;
             this.direction = (Math.random() * 10 + 58) * (Math.PI / 180);
             this.size = Math.random() * 1.2 + 0.5;
+            this.displaySize = this.size;
             this.baseSpeed = Math.random() * 0.4 + 0.2;
-            this.opacity = Math.random() * 0.2 + 0.1; // Slightly lower base opacity
+            this.opacity = Math.random() * 0.1 + 0.1; // Slightly lower base opacity
             this.displayOpacity = this.opacity;
             this.targetRadius = Math.random() * 15 - 3;
             this.isExploding = false;
-            this.isNearMagnet = false; // Track for glow effect
+            this.isNearMagnet = false;
         }
 
         // Pull particles to the button
         spawnAround(targetX, targetY) {
-            const spawnRadius = Math.random() * 10 + 120; // Distance they spawn at before being "sucked in"
+            // Spawn particles at a random distance away from the target
+            const spawnRadius = Math.random() * 150 + 50;
             const angle = Math.random() * Math.PI * 2;
             this.x = targetX + Math.cos(angle) * spawnRadius;
             this.y = targetY + Math.sin(angle) * spawnRadius;
-            this.displayOpacity = 0; // Fade in
+            this.displayOpacity = 0;
             this.isExploding = false;
             this.vx = 0;
             this.vy = 0;
@@ -294,24 +298,24 @@
 
                 if (distToEdge < 150) {
                     this.isNearMagnet = true;
-                    const attractionForce = 0.15; // "Sucking" strength
+                    this.isExploding = true;
+                    this.lastDx = dx;
+                    this.lastDy = dy;
+
+                    // Sucking Force
+                    const attractionForce = 0.15;
                     this.x -= (dx / mag) * distToEdge * attractionForce;
                     this.y -= (dy / mag) * distToEdge * attractionForce;
 
-                    const direction = this.targetRadius > 20 ? -1 : 1;
-                    const orbitSpeed = (3.0 + (this.baseSpeed * 2)) * direction;
+                    // Orbit logic
+                    const orbitSpeed = (2.0 + (this.baseSpeed * Math.random() * 5));
                     const margin = 5;
 
-                    // Orbit logic
-                    if (posY <= -halfH + margin && posX < halfW - cornerRadius) {
-                        this.x += orbitSpeed;
-                    } else if (posX >= halfW - margin && posY < halfH - cornerRadius) {
-                        this.y += orbitSpeed;
-                    } else if (posY >= halfH - margin && posX > -halfW + cornerRadius) {
-                        this.x -= orbitSpeed;
-                    } else if (posX <= -halfW + margin && posY > -halfH + cornerRadius) {
-                        this.y -= orbitSpeed;
-                    } else {
+                    if (posY <= -halfH + margin && posX < halfW - cornerRadius) this.x += orbitSpeed;
+                    else if (posX >= halfW - margin && posY < halfH - cornerRadius) this.y += orbitSpeed;
+                    else if (posY >= halfH - margin && posX > -halfW + cornerRadius) this.x -= orbitSpeed;
+                    else if (posX <= -halfW + margin && posY > -halfH + cornerRadius) this.y -= orbitSpeed;
+                    else {
                         this.x += (posY > 0 ? -orbitSpeed : orbitSpeed);
                         this.y += (posX > 0 ? orbitSpeed : -orbitSpeed);
                     }
@@ -319,61 +323,86 @@
                     const proximityGlow = Math.max(0, 1 - Math.abs(distToEdge) / 30);
                     this.displaySize = this.size * (1.2 + proximityGlow * 2);
                     this.displayOpacity = Math.min(this.displayOpacity + 0.1, 0.8);
-                    this.lastDx = dx;
-                    this.lastDy = dy;
-                    this.isExploding = true;
+
+                    // Kill any previous explosion velocity while held by magnet
+                    this.vx = 0;
+                    this.vy = 0;
                 } else {
                     this.standardMove();
                 }
             } else if (this.isExploding) {
+                // Explosion phase
                 if (this.vx === 0 && this.vy === 0) {
-                    const angle = (this.lastDx !== undefined)
+                    // Calculate angle once at the start of the explosion
+                    let angle = (this.lastDx !== 0 || this.lastDy !== 0)
                         ? Math.atan2(this.lastDy, this.lastDx)
                         : Math.random() * Math.PI * 2;
 
-                    const spread = (Math.random() - 0.5) * 0.5;
-                    const finalAngle = angle + spread;
+                    const finalAngle = angle + (Math.random() - 0.5) * 0.8;
                     const speed = Math.random() * 10 + 5;
+
                     this.vx = Math.cos(finalAngle) * speed;
                     this.vy = Math.sin(finalAngle) * speed;
-                    this.shouldReset = Math.random() > 0.6;
+                    this.shouldReset = Math.random() > 0.4;
+                    this.shouldReset = false;
                 }
 
+                // Apply physics
                 this.x += this.vx;
+                this.vy += GRAVITY;
                 this.y += this.vy;
-                this.vx *= 0.94;
-                this.vy *= 0.94;
-                this.displayOpacity *= 0.96;
 
-                if (this.displayOpacity < 0.05) {
+                this.vx *= 0.94; // Friction
+                this.vy *= 0.94;
+                this.displayOpacity *= 0.92;
+
+                if (this.displayOpacity < 0.01) {
                     this.isExploding = false;
-                    if (this.shouldReset) this.reset();
+
+                    if (this.shouldReset) {
+                        this.reset();
+                    } else {
+                        // Calculate new downward direction
+                        // Take the current velocity but add an extra "push" down
+                        // to ensure the direction isn't pointing upwards.
+                        const downwardForce = 1.0;
+                        this.direction = Math.atan2(this.vy + downwardForce, this.vx);
+
+                        // Reset velocities so standardMove takes over
+                        this.vx = 0;
+                        this.vy = 0;
+                    }
                 }
             } else {
                 this.standardMove();
             }
 
-            if (this.y > height + 50) this.reset();
+            // Global reset if it leaves the bottom
+            if (this.y > height + 100) this.reset();
         }
 
         standardMove() {
             this.x += Math.cos(this.direction) * this.baseSpeed;
             this.y += Math.sin(this.direction) * this.baseSpeed + Math.abs(scrollSpeed * 0.2);
-            this.displaySize = this.size;
+            this.displaySize += (this.size - this.displaySize) * 0.05;
             this.displayOpacity += (this.opacity - this.displayOpacity) * 0.05;
-            this.stretch = Math.min(Math.abs(scrollSpeed) * (1 - this.displayOpacity) * 0.5, 25);
+            this.stretch = Math.min(Math.abs(scrollSpeed) * (1 - this.displayOpacity) * 0.25, 25);
         }
 
         draw(accentColor) {
+
             const alpha = Math.max(0, Math.min(1, this.displayOpacity));
 
             if (this.isNearMagnet) {
                 ctx.save();
                 ctx.globalCompositeOperation = 'lighter';
 
+                const glowAlpha = Math.max(0, Math.min(1, alpha * 0.3));
+                const coreAlpha = Math.max(0, Math.min(1, alpha * 1.75));
+
                 // Broad outer glow
                 ctx.beginPath();
-                ctx.strokeStyle = `rgba(${accentColor}, ${alpha * 0.3})`;
+                ctx.strokeStyle = `rgba(${accentColor}, ${glowAlpha})`;
                 ctx.lineWidth = this.displaySize * 3;
                 ctx.lineCap = 'round';
                 ctx.moveTo(this.x, this.y);
@@ -382,7 +411,7 @@
 
                 // White hot core
                 ctx.beginPath();
-                ctx.strokeStyle = `rgba(255, 255, 255, ${alpha * 1.75})`;
+                ctx.strokeStyle = `rgba(255, 255, 255, ${coreAlpha})`;
                 ctx.lineWidth = this.displaySize * 0.8;
                 ctx.moveTo(this.x, this.y);
                 ctx.lineTo(this.x - this.vx * 0.5, this.y - this.vy * 0.5);
@@ -418,7 +447,7 @@
                 // Forcefully "suck" 20 particles to the button
                 let count = 0;
                 for (let p of particles) {
-                    if (!p.isNearMagnet && count < 25) {
+                    if (!p.isNearMagnet && count < 50) {
                         p.spawnAround(activeMagnet.x, activeMagnet.y);
                         count++;
                     }
@@ -460,14 +489,20 @@
 
     // Main animation loop
     function animate() {
+        // Reset state
+        ctx.globalAlpha = 1.0;
+        ctx.globalCompositeOperation = 'source-over';
         ctx.clearRect(0, 0, width, height);
+
         targetScrollSpeed *= 0.9;
 
         drawGodRays();
+
         particles.forEach(p => {
             p.update();
             p.draw(accentColor);
         });
+
         requestAnimationFrame(animate);
     }
 
