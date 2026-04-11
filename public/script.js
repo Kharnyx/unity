@@ -8,6 +8,9 @@
     let targetScrollSpeed = 0;
     let lastScrollY = window.scrollY;
 
+    let lastTime = 0;
+    let deltaTime = 0;
+
     let activeMagnet = null;
 
     const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--accent-rgb').trim() || "186, 135, 234";
@@ -227,7 +230,9 @@
                 }
             }
         });
-        animate();
+
+        lastTime = performance.now();
+        animate(lastTime);
     }
 
     function resize() {
@@ -254,10 +259,10 @@
             this.direction = (Math.random() * 10 + 58) * (Math.PI / 180);
             this.size = Math.random() * 1.2 + 0.5;
             this.displaySize = this.size;
-            this.baseSpeed = Math.random() * 0.4 + 0.2;
+            this.baseSpeed = Math.random() * 5 + 10;
             this.opacity = Math.random() * 0.1 + 0.1; // Slightly lower base opacity
             this.displayOpacity = this.opacity;
-            this.targetRadius = Math.random() * 15 - 3;
+            this.targetRadius = Math.random() * (20 - 3) - 3;
             this.isExploding = false;
             this.isNearMagnet = false;
         }
@@ -302,13 +307,13 @@
                     this.lastDx = dx;
                     this.lastDy = dy;
 
-                    // Sucking Force
-                    const attractionForce = 0.15;
-                    this.x -= (dx / mag) * distToEdge * attractionForce;
-                    this.y -= (dy / mag) * distToEdge * attractionForce;
+                    // 1. INCREASED SUCKING FORCE: Needs to be higher to overcome deltaTime
+                    const attractionForce = 5.0;
+                    this.x -= (dx / mag) * distToEdge * attractionForce * deltaTime;
+                    this.y -= (dy / mag) * distToEdge * attractionForce * deltaTime;
 
-                    // Orbit logic
-                    const orbitSpeed = (2.0 + (this.baseSpeed * Math.random() * 5));
+                    // 2. STABILIZED ORBIT: Use a much higher base and ensure deltaTime applies to all branches
+                    const orbitSpeed = (Math.random() * (15 - 5) * 5 + (this.baseSpeed * 10)) * deltaTime;
                     const margin = 5;
 
                     if (posY <= -halfH + margin && posX < halfW - cornerRadius) this.x += orbitSpeed;
@@ -324,51 +329,45 @@
                     this.displaySize = this.size * (1.2 + proximityGlow * 2);
                     this.displayOpacity = Math.min(this.displayOpacity + 0.1, 0.8);
 
-                    // Kill any previous explosion velocity while held by magnet
                     this.vx = 0;
                     this.vy = 0;
                 } else {
                     this.standardMove();
                 }
             } else if (this.isExploding) {
-                // Explosion phase
                 if (this.vx === 0 && this.vy === 0) {
-                    // Calculate angle once at the start of the explosion
                     let angle = (this.lastDx !== 0 || this.lastDy !== 0)
                         ? Math.atan2(this.lastDy, this.lastDx)
                         : Math.random() * Math.PI * 2;
 
                     const finalAngle = angle + (Math.random() - 0.5) * 0.8;
-                    const speed = Math.random() * 10 + 5;
+                    const speed = (Math.random() * (500 - 200) + 200);
 
                     this.vx = Math.cos(finalAngle) * speed;
                     this.vy = Math.sin(finalAngle) * speed;
-                    this.shouldReset = Math.random() > 0.4;
-                    this.shouldReset = false;
+                    this.shouldReset = Math.random() > 1;
                 }
 
-                // Apply physics
-                this.x += this.vx;
-                this.vy += GRAVITY;
-                this.y += this.vy;
+                // Apply physics with deltaTime
+                this.x += this.vx * deltaTime;
+                // Gravity needs to be significantly higher when using deltaTime
+                const GRAVITY_PULL = 10;
+                this.vy += GRAVITY_PULL * deltaTime;
+                this.y += this.vy * deltaTime;
 
-                this.vx *= 0.94; // Friction
-                this.vy *= 0.94;
-                this.displayOpacity *= 0.92;
+                // Friction: Pow is the mathematically correct way to handle deltaTime friction
+                const friction = Math.pow(0.96, deltaTime * 60);
+                this.vx *= friction;
+                this.vy *= friction;
+                this.displayOpacity *= Math.pow(0.95, deltaTime * 60); // Fade faster
 
                 if (this.displayOpacity < 0.01) {
                     this.isExploding = false;
-
                     if (this.shouldReset) {
                         this.reset();
                     } else {
-                        // Calculate new downward direction
-                        // Take the current velocity but add an extra "push" down
-                        // to ensure the direction isn't pointing upwards.
-                        const downwardForce = 1.0;
+                        const downwardForce = 100.0;
                         this.direction = Math.atan2(this.vy + downwardForce, this.vx);
-
-                        // Reset velocities so standardMove takes over
                         this.vx = 0;
                         this.vy = 0;
                     }
@@ -377,15 +376,14 @@
                 this.standardMove();
             }
 
-            // Global reset if it leaves the bottom
             if (this.y > height + 100) this.reset();
         }
 
         standardMove() {
-            this.x += Math.cos(this.direction) * this.baseSpeed;
-            this.y += Math.sin(this.direction) * this.baseSpeed + Math.abs(scrollSpeed * 0.2);
-            this.displaySize += (this.size - this.displaySize) * 0.05;
-            this.displayOpacity += (this.opacity - this.displayOpacity) * 0.05;
+            this.x += (Math.cos(this.direction) * this.baseSpeed) * deltaTime;
+            this.y += (Math.sin(this.direction) * this.baseSpeed + Math.abs(scrollSpeed * 0.2)) * deltaTime;
+            this.displaySize += (this.size - this.displaySize) * 0.01 * deltaTime;
+            this.displayOpacity += (this.opacity - this.displayOpacity) * 0.01 * deltaTime;
             this.stretch = Math.min(Math.abs(scrollSpeed) * (1 - this.displayOpacity) * 0.25, 25);
         }
 
@@ -470,7 +468,7 @@
         ];
 
         rays.forEach((ray, i) => {
-            const pulse = Math.sin(time + i) * 0.02;
+            const pulse = Math.sin(time + i) * 0.02 * deltaTime;
             const grad = ctx.createLinearGradient(ray.x, 0, ray.x - 500, height);
 
             grad.addColorStop(0, `rgba(255, 255, 255, ${ray.op + pulse})`);
@@ -488,7 +486,19 @@
     }
 
     // Main animation loop
-    function animate() {
+    function animate(timestamp) {
+        // If timestamp is missing or it's the first frame, skip
+        if (!timestamp) {
+            requestAnimationFrame(animate);
+            return;
+        }
+
+        // Calculate deltaTime in seconds
+        let delta = (timestamp - lastTime) / 1000;
+        lastTime = timestamp;
+
+        deltaTime = isNaN(delta) ? 0 : Math.min(delta, 0.1);
+
         // Reset state
         ctx.globalAlpha = 1.0;
         ctx.globalCompositeOperation = 'source-over';
