@@ -774,7 +774,9 @@ h1 {
 .search-wrapper {
     position: relative;
     display: inline-flex;
+    justify-content: flex-end;
     align-items: center;
+    width: 100%;
 }
 
 #asset-search {
@@ -783,12 +785,8 @@ h1 {
     width: 42px;
     min-width: 42px;
     height: 42px;
-
-    /* Increased left padding to 2.6rem to clear the icon and look balanced */
     padding: 0.75rem 0.75rem 0.75rem 2.6rem;
-
     color: var(--text);
-    /* 11px from left, 'center' for vertical. Added 18px / 18px for explicit size */
     background: var(--card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' stroke='rgba(238, 244, 232, 1)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' viewBox='0 0 24 24'%3E%3Ccircle cx='11' cy='11' r='8'%3E%3C/circle%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'%3E%3C/line%3E%3C/svg%3E") no-repeat 11px center / 18px 18px;
 
     border: 1px solid var(--border);
@@ -797,28 +795,6 @@ h1 {
     cursor: pointer;
     transition: background 0.3s ease, border-color 0.3s ease, width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
-
-/* The Icon Logic
-.search-wrapper::before {
-    content: "";
-    position: absolute;
-    left: 14px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 18px;
-    height: 18px;
-
-    background-color: var(--text);
-
-    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' viewBox='0 0 24 24'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E") no-repeat center;
-    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' viewBox='0 0 24 24'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E") no-repeat center;
-    -webkit-mask-size: contain;
-    mask-size: contain;
-
-    pointer-events: none;
-    z-index: 5;
-    transition: background-color 0.3s ease;
-} */
 
 /* Hover / Focus */
 #asset-search:hover,
