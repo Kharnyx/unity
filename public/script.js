@@ -81,32 +81,52 @@
 
     navLinks.forEach(link => {
         link.addEventListener('click', (e) => {
-            const targetId = link.getAttribute('href');
+            handleAnchorNavigation(link, e);
+        });
+    });
 
-            // Only trigger for internal anchor links
-            if (targetId.startsWith('#')) {
-                e.preventDefault();
-                const targetElement = document.querySelector(targetId);
-                const header = document.querySelector('.header');
+    function handleAnchorNavigation(link, event = null) {
+        const targetId = link.getAttribute('href');
 
-                if (targetElement && header) {
-                    // Calculate the actual height of the header right now
-                    const headerHeight = header.offsetHeight;
+        // Only handle internal anchor links
+        if (targetId && targetId.startsWith('#')) {
 
-                    // Calculate the element's position relative to the document
-                    const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+            if (event) {
+                event.preventDefault();
+            }
 
-                    // Scroll to the position minus the dynamic header height (plus 20px breathing room)
-                    window.scrollTo({
-                        top: elementPosition - headerHeight - 34,
-                        behavior: 'smooth'
-                    });
+            const targetElement = document.querySelector(targetId);
+            const header = document.querySelector('.header');
 
-                    // Update URL hash without jumping
+            if (targetElement && header) {
+                const headerHeight = header.offsetHeight;
+
+                const elementPosition =
+                    targetElement.getBoundingClientRect().top + window.pageYOffset;
+
+                window.scrollTo({
+                    top: elementPosition - headerHeight - 34,
+                    behavior: 'smooth'
+                });
+
+                // Update URL hash without jump (only on click)
+                if (event) {
                     history.pushState(null, null, targetId);
                 }
             }
-        });
+        }
+    }
+
+    window.addEventListener('load', () => {
+        const hash = window.location.hash;
+
+        if (hash) {
+            const matchingLink = document.querySelector(`a[href="${hash}"]`);
+
+            if (matchingLink) {
+                handleAnchorNavigation(matchingLink);
+            }
+        }
     });
 
     const modelCards = document.querySelectorAll(".model-card");
